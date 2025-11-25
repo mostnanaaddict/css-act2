@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+    }
+
+    :root {
+        --bg-1: rgb(240, 248, 242);
+        --bg-2: rgb(200, 230, 210);
+        --extra: rgb(141, 198, 154);
+        --text: #000000;
+    }
+
+    .dark {
+        --bg-1: rgb(34, 77, 44);
+        --bg-2: rgb(20, 48, 29);
+        --extra: rgb(80, 156, 98);
+        --text: rgb(181, 228, 178);
+    }
+
+    .light {
+        --bg-1: rgb(240, 248, 242);
+        --bg-2: rgb(200, 230, 210);
+        --extra: rgb(141, 198, 154);
+        --text: #000000;
+    }
+
+
+    body {
+        background: linear-gradient(var(--bg-1), var(--bg-2));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text);
+        height: 100vh;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+        font-size: 1.2rem;
+    }
+    .container div{
+        gap: 10px;
+    }
+    button{
+        background-color: var(--extra);
+        border-radius: 5px;
+        color: var(--text);
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    #result{
+        font-weight: bold;
+        margin: 10px;
+    }
+    nav {
+        background-color: var(--extra);
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    ul {
+        list-style-type: none;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        padding: 15px 0;
+    }
+
+    li {
+        display: flex;
+        color: rgb(0, 48, 0);
+        font-size: 1.4rem;
+    }
+
+    .navbtn a {
+        text-decoration: none;
+        color: rgb(0, 48, 0);
+        font-size: 1.4rem;
+        transition: 0.2s ease-in-out;
+        display: inline-block;
+    }
+
+    .navbtn:hover {
+        transform: scale(1.05);
+        text-decoration: underline;
+    }
+
+    .nav-right {
+        display: flex;
+        gap: 30px;
+        margin-left: 200px;
+    }
+
+    #slider {
+        height: 15px;
+        width: 15px;
+        border-radius: 100%;
+        background-color: rgba(0, 0, 0, 0.79);
+        margin-top: 5px;
+    }
+
+    .right {
+        animation: slideR 1s forwards;
+    }
+
+    .left {
+        animation: slideL 1s forwards;
+    }
+
+    @keyframes slideR {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(20px);
+        }
+    }
+
+    @keyframes slideL {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-20px);
+        }
+    }
+</style>
+
+<body>
+    <nav>
+        <ul>
+            <li class="navbtn"><a href="acceuil.html">Accueil</a></li>
+            <li class="navbtn"><a href="explore.html">Explorer la Terre verte</a></li>
+            <li class="navbtn"><a href="pendu.html">Jeu du pendu</a></li>
+            <li class="navbtn"><a href="activite.html">Activité interactive</a></li>
+            <div class="nav-right">
+                <li><a id="sombre">Sombre</a></li>
+                <li>
+                    <div id="slider"></div>
+                </li>
+                <li><a id="clair">Clair</a></li>
+            </div>
+        </ul>
+    </nav>
+    <div class="container">
+        <form name="f">
+
+            <div>
+                <label><b>1. Quel geste permet d'économiser le plus d'eau au quotidien ?</b></label><br>
+                <input type="radio" name="q1" value="0"> Laisser le robinet ouvert en se brossant les dents <br>
+                <input type="radio" name="q1" value="1"> Prendre une douche courte <br>
+                <input type="radio" name="q1" value="0"> Arroser le jardin en plein midi <br>
+                <input type="radio" name="q1" value="0"> Rincer la vaisselle à l'eau courante <br><br>
+
+            </div>
+            <div>
+                <label><b>2. Dans quel bac faut-il déposer une bouteille plastique ?</b></label><br>
+                <input type="radio" name="q2" value="1"> Bac jaune (recyclage) <br>
+                <input type="radio" name="q2" value="0"> Bac vert (verre) <br>
+                <input type="radio" name="q2" value="0"> Bac marron (déchets organiques) <br>
+                <input type="radio" name="q2" value="0"> Déchets non recyclables <br><br>
+
+            </div>
+            <div>
+                <label><b>3. Quelle source d'énergie est renouvelable ?</b></label><br>
+                <input type="radio" name="q3" value="1"> L’énergie solaire <br>
+                <input type="radio" name="q3" value="0"> Le charbon <br>
+                <input type="radio" name="q3" value="0"> Le pétrole <br>
+                <input type="radio" name="q3" value="0"> Le gaz naturel <br><br>
+
+            </div>
+            <div>
+                <label><b>4. Quelle action permet de réduire sa consommation d'énergie à la maison ?</b></label><br>
+                <input type="radio" name="q4" value="0">Laisser les lumières allumées dans toutes les pièces<br>
+                <input type="radio" name="q4" value="1">Éteindre les appareils en veille<br>
+                <input type="radio" name="q4" value="0">Utiliser uniquement le chauffage au maximum<br>
+                <input type="radio" name="q4" value="0">Ouvrir le réfrigérateur pour se refroidir<br><br>
+
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <button type="button" id="btn">Valider</button>
+
+            </div>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+</body>
+<script>
+    let btn = document.getElementById('btn');
+
+    btn.addEventListener('click', function () {
+        let q1 = document.querySelector('input[name="q1"]:checked');
+        let q2 = document.querySelector('input[name="q2"]:checked');
+        let q3 = document.querySelector('input[name="q3"]:checked');
+        let q4 = document.querySelector('input[name="q3"]:checked');
+        let count = Number(q1.value) + Number(q2.value) + Number(q3.value) + Number(q4.value);
+        let score = (count * 100) / 4;
+        let res = document.getElementById('result');
+        res.textContent = "Bravo " + localStorage.getItem("pseudo") + ", tu as accompli " + score + "% d'actions eco-responsable !";
+    });
+
+
+    let body = document.body;
+    let slider = document.getElementById("slider");
+    let sombre = document.getElementById("sombre");
+    let clair = document.getElementById("clair");
+
+    body.classList.add(localStorage.getItem("mode") || "light");
+    sombre.addEventListener("click", function () {
+        slider.classList.remove("right");
+        slider.classList.add("left");
+        body.classList.remove("light");
+        body.classList.add("dark");
+        localStorage.setItem("mode","dark");
+    });
+    clair.addEventListener("click", function () {
+        slider.classList.remove("left");
+        slider.classList.add("right");
+        body.classList.remove("dark");
+        body.classList.add("light");
+        localStorage.setItem("mode","light");
+    });
+
+</script>
+
+</html>

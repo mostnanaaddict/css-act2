@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+    }
+:root{
+        --bg-1: rgb(240, 248, 242);
+        --bg-2: rgb(200, 230, 210);
+        --extra: rgb(141, 198, 154);
+        --text: #000000;
+    }
+    
+    .dark{
+        --bg-1: rgb(34, 77, 44);
+        --bg-2: rgb(20, 48, 29);
+        --extra: rgb(80, 156, 98);
+        --text: rgb(181, 228, 178);
+    }
+    .light{
+        --bg-1: rgb(240, 248, 242);
+        --bg-2: rgb(200, 230, 210);
+        --extra: rgb(141, 198, 154);
+        --text: #000000;
+    }
+    
+    .right {
+    animation: slideR 1s forwards;
+}
+
+.left {
+    animation: slideL 1s forwards;
+}
+
+@keyframes slideR {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(20px); }
+}
+
+@keyframes slideL {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-20px); }
+}
+
+
+    #slider{
+        height: 15px;
+        width: 15px;
+        border-radius: 100%;
+        background-color: rgba(0, 0, 0, 0.79);
+        margin-top: 5px;
+    }
+
+
+body {
+        background: linear-gradient(var(--bg-1),var(--bg-2));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--text);
+        height: 100vh;
+
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        background-color: var(--extra);
+        padding: 30px;
+        width: 30%;
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+        text-align: center;
+        color: rgb(0, 48, 0);
+        margin: 3px;
+        font-size: 2rem;
+    }
+
+    label {
+        font-size: 1.2rem;
+        color: rgb(0, 48, 0);
+        margin-left: 8px;
+    }
+
+    input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    button {
+        padding: 10px;
+        background-color: rgb(48, 89, 48);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: rgb(34, 70, 34);
+    }
+
+    .nav{
+        position: fixed;     
+    top: 20px;           
+    right: 20px; 
+        background-color: var(--extra);
+        padding: 10px 0;
+        font-size: 1.4rem;
+        display: flex;
+        text-decoration: none;
+        gap: 30px;
+        margin-left: 200px;
+        border-radius: 25px;
+    }
+    .nav a{
+        color: var(--text);
+        margin: 0 20px;
+        text-decoration: none;
+    }
+ 
+    
+</style>
+
+<body>
+    <div class="nav">
+    <a id="sombre" href="#">Sombre</a>
+    <div id="slider"></div>
+    <a id="clair" href="#">Clair</a>
+</div>
+
+    <form id="userForm">
+        <h2>Bienvenue !</h2>
+
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom" required>
+
+        <label for="prenom">Prenom:</label>
+        <input type="text" id="prenom" name="prenom" required>
+
+        <label for="pseudo">Pseudo:</label>
+        <input type="text" id="pseudo" name="pseudo" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" min="1" required>
+
+        <button type="button" id="btn">Start</button>
+    </form>
+
+</body>
+
+</html>
+<script>
+    localStorage.clear();
+    let btn = document.getElementById('btn');
+
+    if(localStorage.getItem("nom") != null){
+        window.location.href='acceuil.html';
+    }
+
+    btn.addEventListener('click', function () {
+        let nom = document.getElementById('nom');
+        let prenom = document.getElementById('prenom');
+        let pseudo = document.getElementById('pseudo');
+        let age = document.getElementById('age');
+
+        localStorage.setItem("nom",nom.value);
+        localStorage.setItem("prenom",prenom.value);
+        localStorage.setItem("pseudo",pseudo.value);
+        localStorage.setItem("age",age.value);
+
+        window.location.href='acceuil.html';
+    })
+
+
+
+    let body = document.body;
+    let slider = document.getElementById("slider");
+    let sombre = document.getElementById("sombre");
+    let clair = document.getElementById("clair");
+
+    sombre.addEventListener("click", function () {
+        slider.classList.remove("right");
+        slider.classList.add("left");
+        body.classList.remove("light");
+        body.classList.add("dark");
+        localStorage.setItem("mode","dark");
+    });
+    clair.addEventListener("click", function () {
+        slider.classList.remove("left");
+        slider.classList.add("right");
+        body.classList.remove("dark");
+        body.classList.add("light");
+        localStorage.setItem("mode","light");
+    });
+
+</script>

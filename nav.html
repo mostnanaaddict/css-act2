@@ -1,0 +1,51 @@
+<style>
+    .nav-right{
+        display: flex;
+        gap: 30px;
+        margin-left: 200px;
+    }
+    #slider{
+        height: 15px;
+        width: 15px;
+        border-radius: 100%;
+        background-color: rgba(0, 0, 0, 0.79);
+        margin-top: 5px;
+    }
+    .right{
+        animation: slideR 1s forwards;
+    }
+    .left{
+        animation: slideL 1s forwards;
+    }
+    @keyframes slideR {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(20px);
+        }
+    }
+    @keyframes slideL {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-20px);
+        }
+    }
+</style>
+<nav>
+        <ul>
+            <li class="navbtn"><a href="acceuil.html">Accueil</a></li>
+            <li class="navbtn"><a href="explore.html">Explorer la Terre verte</a></li>
+            <li class="navbtn"><a href="pendu.html">Jeu du pendu</a></li>
+            <li class="navbtn"><a href="activite.html">Activité interactive</a></li>
+            <div class="nav-right">
+                <li><a id="sombre">Sombre</a></li>
+            <li><div id="slider"></div></li>
+            <li><a id="clair">Clair</a></li>
+            </div>
+        </ul>
+    </nav>
