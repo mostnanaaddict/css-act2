@@ -120,6 +120,11 @@
         font-size: 1em;
         cursor: pointer;
     }
+    .topbar{
+        background-color: var(--text);
+        color: var(--bg-1);
+        width: 100%;
+    }
     .nav-right{
         display: flex;
         gap: 30px;
@@ -159,12 +164,13 @@
 </style>
 
 <body>
+    <div id="topbar"></div>
     <nav>
         <ul>
             <li class="navbtn"><a href="acceuil.html">Accueil</a></li>
             <li class="navbtn"><a href="explore.html">Explorer la Terre verte</a></li>
             <li class="navbtn"><a href="pendu.html">Jeu du pendu</a></li>
-            <li class="navbtn"><a href="activite.html">Activité interactive</a></li>
+            <li class="navbtn"><a href="activite.html">Quiz</a></li>
             <div class="nav-right">
                 <li><a id="sombre">Sombre</a></li>
             <li><div id="slider"></div></li>
@@ -207,6 +213,9 @@
 
 </body>
 <script>
+    let topbar = document.getElementById("topbar");
+    topbar.innerHTML = "Bienvenue " + localStorage.getItem("prenom") + " " + localStorage.getItem("nom") + " (" + localStorage.getItem("pseudo") + "), Age: " + localStorage.getItem("age");
+
     let body = document.body;
     let slider = document.getElementById("slider");
     let sombre = document.getElementById("sombre");

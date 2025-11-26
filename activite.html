@@ -85,6 +85,11 @@
         color: rgb(0, 48, 0);
         font-size: 1.4rem;
     }
+    .topbar{
+        background-color: var(--text);
+        color: var(--bg-1);
+        width: 100%;
+    }
 
     .navbtn a {
         text-decoration: none;
@@ -143,12 +148,13 @@
 </style>
 
 <body>
+    <div id="topbar"></div>
     <nav>
         <ul>
             <li class="navbtn"><a href="acceuil.html">Accueil</a></li>
             <li class="navbtn"><a href="explore.html">Explorer la Terre verte</a></li>
             <li class="navbtn"><a href="pendu.html">Jeu du pendu</a></li>
-            <li class="navbtn"><a href="activite.html">Activité interactive</a></li>
+            <li class="navbtn"><a href="activite.html">Quiz</a></li>
             <div class="nav-right">
                 <li><a id="sombre">Sombre</a></li>
                 <li>
@@ -204,8 +210,10 @@
 
 </body>
 <script>
-    let btn = document.getElementById('btn');
+    let topbar = document.getElementById("topbar");
+    topbar.innerHTML = "Bienvenue " + localStorage.getItem("prenom") + " " + localStorage.getItem("nom") + " (" + localStorage.getItem("pseudo") + "), Age: " + localStorage.getItem("age");
 
+    let btn = document.getElementById('btn');
     btn.addEventListener('click', function () {
         let q1 = document.querySelector('input[name="q1"]:checked');
         let q2 = document.querySelector('input[name="q2"]:checked');
