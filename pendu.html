@@ -10,23 +10,25 @@
     * {
         margin: 0;
     }
-:root{
+:root {
         --bg-1: rgb(240, 248, 242);
         --bg-2: rgb(200, 230, 210);
         --extra: rgb(141, 198, 154);
-        --text: #000000;
+        --extra2: rgb(108, 171, 123);
+        --text: #020202;
     }
-    
-    .dark{
+    .dark {
         --bg-1: rgb(34, 77, 44);
         --bg-2: rgb(20, 48, 29);
         --extra: rgb(80, 156, 98);
+        --extra2: rgb(120, 177, 133);
         --text: rgb(181, 228, 178);
     }
-    .light{
+    .light {
         --bg-1: rgb(240, 248, 242);
         --bg-2: rgb(200, 230, 210);
         --extra: rgb(141, 198, 154);
+        --extra2: rgb(108, 171, 123);
         --text: #000000;
     }
     body {
@@ -37,6 +39,14 @@
         color: var(--text);
         height: 100vh;
 
+    }
+    footer{
+        background:linear-gradient(var(--extra2),var(--extra));
+        color: var(--bg-1);
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+        font-weight: bold;
     }
     nav{
         background-color: var(--extra);
@@ -69,6 +79,7 @@
     #title {
         text-align: center;
         margin: 30px;
+        animation: fadeup 1s ease-in;
     }
     .container {
         display: flex;
@@ -76,6 +87,7 @@
         align-items: center;
         gap: 40px;
         max-width: 1000px;
+        animation: fadeup 1s ease-in;
     }
     .section {
         padding-top: 50px;
@@ -114,11 +126,14 @@
         margin-bottom: 10px;
     }
     .btn {
+        background-color: var(--extra);
+        border-radius: 5px;
+        color: var(--text);
         padding: 10px 20px;
-        margin-right: 10px;
-        margin-top: 20px;
-        font-size: 1em;
+        font-size: 1rem;
         cursor: pointer;
+        margin-top: 1rem;
+        margin-right: 5px;
     }
     .topbar{
         background-color: var(--text);
@@ -159,6 +174,17 @@
 
         100% {
             transform: translateX(-20px);
+        }
+    }
+    @keyframes fadeup {
+        0% {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
         }
     }
 </style>
@@ -204,12 +230,13 @@
             <p>Cliquer sur un caractere et deviner le mot</p>
             <b id="word"></b>
             <div id="letters"></div>
-            <button type="button" class="btn">Jouer</button>
-            <button type="button" class="btn">Continuer Partie</button>
+            <button type="button" class="btn" id="rejouer">Re-Jouer</button>
         </div>
 
     </div>
-
+<footer>
+        <p>© 2025 Ammar Tasnim. Tous droits réservés.</p>
+    </footer>
 
 </body>
 <script>
@@ -299,8 +326,8 @@
             }
             if (!displayedWord.includes('*')) {
                 letterbtns.forEach(btn => btn.disabled = true);
-                localStorage.setItem("penduscore",attempts);
                 alert("You won!");
+                localStorage.setItem("scorePendu",attempts);
             }
 
         })
@@ -321,6 +348,10 @@
         }
     }
 
+    let btns = document.getElementById("rejouer");
+    rejouer.addEventListener("click", function () {
+        window.location.reload();
+    });
 
 </script>
 

@@ -1,91 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    
+
 </head>
 <style>
-    *{margin:0}
-    :root{
+    * {
+        margin: 0
+    }
+
+    :root {
         --bg-1: rgb(240, 248, 242);
         --bg-2: rgb(200, 230, 210);
         --extra: rgb(141, 198, 154);
-        --text: #000000;
+        --extra2: rgb(108, 171, 123);
+        --text: #020202;
     }
-    
-    .dark{
+
+    .dark {
         --bg-1: rgb(34, 77, 44);
         --bg-2: rgb(20, 48, 29);
         --extra: rgb(80, 156, 98);
+        --extra2: rgb(120, 177, 133);
         --text: rgb(181, 228, 178);
     }
-    .light{
+
+    .light {
         --bg-1: rgb(240, 248, 242);
         --bg-2: rgb(200, 230, 210);
         --extra: rgb(141, 198, 154);
+        --extra2: rgb(108, 171, 123);
         --text: #000000;
     }
+
     body {
-        background: linear-gradient(var(--bg-1),var(--bg-2));
+        background: linear-gradient(var(--bg-1), var(--bg-2));
         display: flex;
         flex-direction: column;
         align-items: center;
         color: var(--text);
-        height: 100vh;
+        text-align: center;
     }
-    nav{
+
+    footer {
+        background: linear-gradient(var(--extra2), var(--extra));
+        color: var(--bg-1);
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+        font-weight: bold;
+    }
+
+    nav {
         background-color: var(--extra);
         width: 100%;
         padding: 10px 0;
     }
-    ul{
+
+    ul {
         list-style-type: none;
         display: flex;
         justify-content: center;
         gap: 40px;
         padding: 15px 0;
     }
-    li{
+
+    li {
         display: flex;
         color: rgb(0, 48, 0);
         font-size: 1.4rem;
     }
-    .topbar{
+
+    .topbar {
         background-color: var(--text);
         color: var(--bg-1);
         width: 100%;
     }
-    .navbtn a{
+
+    .navbtn a {
         text-decoration: none;
         color: rgb(0, 48, 0);
         font-size: 1.4rem;
         transition: 0.2s ease-in-out;
         display: inline-block;
     }
-    .navbtn:hover{
+
+    .navbtn:hover {
         transform: scale(1.05);
         text-decoration: underline;
     }
-    
-    .nav-right{
+
+    .nav-right {
         display: flex;
         gap: 30px;
         margin-left: 200px;
     }
-    #slider{
+
+    #slider {
         height: 15px;
         width: 15px;
         border-radius: 100%;
         background-color: rgba(0, 0, 0, 0.79);
         margin-top: 5px;
     }
-    .right{
+
+    .right {
         animation: slideR 1s forwards;
     }
-    .left{
+
+    .left {
         animation: slideL 1s forwards;
     }
+
     @keyframes slideR {
         0% {
             transform: translateX(0);
@@ -95,6 +127,7 @@
             transform: translateX(20px);
         }
     }
+
     @keyframes slideL {
         0% {
             transform: translateX(0);
@@ -104,7 +137,54 @@
             transform: translateX(-20px);
         }
     }
+
+    img {
+        width: 200px;
+        background-color: white;
+        border-radius: 15px;
+        margin: 5px;
+        border: 1px solid black;
+    }
+
+    #recyclage,
+    #habitat {
+        width: 340px;
+        height: 140px;
+        border: 2px dotted black;
+        margin: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    #map {
+        height: 250px;
+        width: 80%;
+        margin: 20px auto;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+    }
+
+    p {
+        font-weight: bold;
+        margin-bottom: -1rem;
+    }
 </style>
+
 <body>
     <div id="topbar"></div>
     <nav>
@@ -115,12 +195,49 @@
             <li class="navbtn"><a href="activite.html">Quiz</a></li>
             <div class="nav-right">
                 <li><a id="sombre">Sombre</a></li>
-            <li><div id="slider"></div></li>
-            <li><a id="clair">Clair</a></li>
+                <li>
+                    <div id="slider"></div>
+                </li>
+                <li><a id="clair">Clair</a></li>
             </div>
         </ul>
     </nav>
-    
+    <div style="margin-top: 10px;">
+        <h1>Votre geolocalisation</h1>
+        <div>
+            <p id="info"></p>
+            <div id="map"></div>
+        </div>
+
+
+        <h1>Trier pour sauver la planète</h1>
+        <div>
+            <div class="container">
+                <img src="img/bouteille.png" class="dechet" id="bouteille" draggable="true">
+                <img src="img/poisson.jpg" class="animal" id="poisson" draggable="true">
+                <img src="img/canette.png" class="dechet" id="canette" draggable="true">
+                <img src="img/oiseau.png" class="animal" id="oiseau" draggable="true">
+                <img src="img/tortue.png" class="animal" id="tortue" draggable="true">
+                <img src="img/papier.jpg" class="dechet" id="papier" draggable="true">
+            </div>
+
+
+            <div class="container">
+                <div>
+                    <h2>Recyclage</h2><br>
+                    <div id="recyclage"></div>
+                </div>
+                <div>
+                    <h2>Habitat naturel</h2><br>
+                    <div id="habitat"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <footer>
+        <p>© 2025 Ammar Tasnim. Tous droits réservés.</p>
+    </footer>
 </body>
 <script>
     let topbar = document.getElementById("topbar");
@@ -137,14 +254,135 @@
         slider.classList.add("left");
         body.classList.remove("light");
         body.classList.add("dark");
-        localStorage.setItem("mode","dark");
+        localStorage.setItem("mode", "dark");
     });
     clair.addEventListener("click", function () {
         slider.classList.remove("left");
         slider.classList.add("right");
         body.classList.remove("dark");
         body.classList.add("light");
-        localStorage.setItem("mode","light");
+        localStorage.setItem("mode", "light");
     });
+
+
+
+    let dechets = Array.from(document.getElementsByClassName("dechet"));
+    let animaux = Array.from(document.getElementsByClassName("animal"));
+    let recyclage = document.getElementById("recyclage");
+    let habitat = document.getElementById("habitat");
+
+    dechets.forEach(d => {
+        d.addEventListener("dragstart", function (evt) {
+            evt.dataTransfer.setData('text/plain', evt.target.id)
+        })
+    });
+    animaux.forEach(d => {
+        d.addEventListener("dragstart", function (evt) {
+            evt.dataTransfer.setData('text/plain', evt.target.id)
+        })
+    });
+    recyclage.addEventListener('dragover', function (evt) {
+        evt.preventDefault();
+    })
+    habitat.addEventListener('dragover', function (evt) {
+        evt.preventDefault();
+    })
+    recyclage.addEventListener('drop', function (evt) {
+        evt.preventDefault();
+        const data = evt.dataTransfer.getData('text/plain');
+        const elementDeplace = document.getElementById(data);
+        if (elementDeplace.classList.contains("dechet")) {
+            elementDeplace.style.width = "100px";
+            elementDeplace.style.height = "100px";
+            evt.currentTarget.appendChild(elementDeplace);
+            alert('Bravo ! ');
+        }
+        else {
+            alert('Non, ' + data + ' ne va pas dans la nature !');
+        }
+
+    })
+    habitat.addEventListener('drop', function (evt) {
+        evt.preventDefault();
+        const data = evt.dataTransfer.getData('text/plain');
+        const elementDeplace = document.getElementById(data);
+        if (elementDeplace.classList.contains("animal")) {
+            elementDeplace.style.width = "100px";
+            elementDeplace.style.height = "100px";
+            evt.currentTarget.appendChild(elementDeplace);
+            alert('Bravo ! ');
+        }
+        else {
+            alert('Non, ' + data + ' ne va pas dans la recyclage !');
+        }
+    })
+
+    const info = document.getElementById("info");
+    let map = null;
+    let marker = null;
+    const lat = parseFloat(localStorage.getItem('lat'));
+    const lon = parseFloat(localStorage.getItem('lon'));
+
+    const greenIcon = L.icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        shadowSize: [41, 41]
+    });
+
+    if (lat && lon) {
+        map = L.map('map').setView([lat, lon], 13);
+        if (marker) {
+            marker.remove();
+        }
+        marker = L.marker([lat, lon], { icon: greenIcon }).addTo(map);
+        info.textContent = `Position trouvée ! Latitude : ${lat.toFixed(4)}, Longitude : ${lon.toFixed(4)}`;
+
+    } else {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+
+                localStorage.setItem('lat', lat);
+                localStorage.setItem('lon', lon);
+
+                map = L.map('map').setView([lat, lon], 13);
+
+
+                info.textContent = `Position trouvée ! Latitude : ${lat.toFixed(4)}, Longitude : ${lon.toFixed(4)}`;
+                if (marker) {
+                    marker.remove();
+                }
+                marker = L.marker([lat, lon], { icon: greenIcon }).addTo(map);
+            }, showError);
+        } else {
+            info.textContent = "La géolocalisation n'est pas supportée par ce navigateur.";
+        }
+    }
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                info.textContent = "Localisation refusée par l'utilisateur.";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                info.textContent = "Informations de localisation indisponibles.";
+                break;
+            case error.TIMEOUT:
+                info.textContent = "Temps de réponse est dépassé.";
+                break;
+            case error.UNKNOWN_ERROR:
+            default:
+                info.textContent = "Une erreur inconnue est survenue.";
+                break;
+        }
+    }
 </script>
+
 </html>

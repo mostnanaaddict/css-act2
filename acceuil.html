@@ -15,13 +15,15 @@
         --bg-1: rgb(240, 248, 242);
         --bg-2: rgb(200, 230, 210);
         --extra: rgb(141, 198, 154);
-        --text: #000000;
+        --extra2: rgb(108, 171, 123);
+        --text: #020202;
     }
 
     .dark {
         --bg-1: rgb(34, 77, 44);
         --bg-2: rgb(20, 48, 29);
         --extra: rgb(80, 156, 98);
+        --extra2: rgb(120, 177, 133);
         --text: rgb(181, 228, 178);
     }
 
@@ -29,6 +31,7 @@
         --bg-1: rgb(240, 248, 242);
         --bg-2: rgb(200, 230, 210);
         --extra: rgb(141, 198, 154);
+        --extra2: rgb(108, 171, 123);
         --text: #000000;
     }
 
@@ -39,7 +42,17 @@
         align-items: center;
         color: var(--text);
     }
-    .topbar{
+
+    footer {
+        background: linear-gradient(var(--extra2), var(--extra));
+        color: var(--bg-1);
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+        font-weight: bold;
+    }
+
+    .topbar {
         background-color: var(--text);
         color: var(--bg-1);
         width: 100%;
@@ -83,9 +96,9 @@
         margin: 20px;
         font-size: 3rem;
         color: var(--text);
-        animation: faderight 1s ease;
-        text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.278);
+        text-indent: 3px;
     }
+
 
     .carte {
         background-color: var(--extra);
@@ -96,12 +109,54 @@
         font-size: 1.4rem;
         width: 800px;
         transition: 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        animation:  fadeup 1s ease-in;
     }
+
 
     .carte:hover,
     .vid:hover {
         transform: scale(1.05);
     }
+
+    #startbtn {
+        padding: 15px;
+        font-size: 1.2rem;
+        border-radius: 10px;
+        border: none;
+        background-color: var(--extra2);
+        color: var(--bg-1);
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        animation: faderight 1s ease;
+        animation: glow 4s infinite alternate;
+
+    }
+
+    @keyframes glow {
+        0% {
+            box-shadow: 0 0 5px var(--extra2)
+        }
+
+        50% {
+            box-shadow: 0 0 10px rgb(172, 227, 189)
+        }
+
+        100% {
+            box-shadow: 0 0 15px rgb(179, 231, 195);
+            transform: scale(1.03);
+        }
+
+    }
+
+    #startbtn:hover {
+        transform: scale(1.05);
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
 
     .music {
         position: fixed;
@@ -134,6 +189,7 @@
         padding: 10px;
         width: 800px;
         transition: 0.3s ease-in-out;
+        animation:  fadeup 1s ease-in;
     }
 
     video {
@@ -206,6 +262,28 @@
             transform: translateX(0px);
         }
     }
+
+    #play {
+        width: 32px;
+        height: 32px;
+        border: none;
+        cursor: pointer;
+        border-radius: 100%;
+    }
+    .playicon{
+        background-image: url(img/play.jpg);
+        background-size: cover;
+    }
+    .pauseicon{
+        background-image: url(img/pause.png);
+        background-size: cover;
+    }
+
+    #vol {
+        width: 100px;
+        cursor: pointer;
+
+    }
 </style>
 
 <body>
@@ -230,16 +308,22 @@
     <div class="carte">
         Bienvenue sur notre site dédié à l'environnement ! Explorez des lieux naturels sur une carte interactive,
         découvrez des gestes écologiques pour protéger la planète et testez vos connaissances avec un jeu du pendu
-        écologique. Apprendre en s'amusant n'a jamais été aussi simple !
+        écologique. Apprendre en s'amusant n'a jamais été aussi simple ! <br>
+        <button id="startbtn">Commencer l'exploration</button>
     </div>
     <div class="vid">
         <video src="download.mp4" controls></video>
     </div>
     <div class="music">
         <b>Vangelis</b>
-        <!--add autoplay-->
-        <audio id="vangelis" controls src="Vangelis - Conquest of paradise.mp3" loop></audio>
+        <audio id="vangelis" src="Vangelis - Conquest of paradise.mp3" loop></audio>
+        <button id="play" class="playicon"></button>
+        <input type="range" id="vol" min="0" max="1" step="0.01">
+
     </div>
+    <footer>
+        <p>© 2025 Ammar Tasnim. Tous droits réservés.</p>
+    </footer>
 </body>
 <script>
     let body = document.body;
@@ -263,16 +347,45 @@
         localStorage.setItem("mode", "light");
     });
 
-    let vangelis = document.getElementById("vangelis");
-    if (localStorage.getItem("audioVolume") !== null) {
-        vangelis.volume = parseFloat(localStorage.getItem("audioVolume"));
-    }
-    vangelis.addEventListener("volumechange", function () {
-        localStorage.setItem("audioVolume", vangelis.volume);
-    });
+
 
     let topbar = document.getElementById("topbar");
     topbar.innerHTML = "Bienvenue " + localStorage.getItem("prenom") + " " + localStorage.getItem("nom") + " (" + localStorage.getItem("pseudo") + "), Age: " + localStorage.getItem("age");
+
+    let startbtn = document.getElementById("startbtn");
+    startbtn.addEventListener("click", function () {
+        window.location.href = "explore.html";
+    });
+
+    let vangelis = document.getElementById("vangelis");
+    let play = document.getElementById("play");
+    let vol = document.getElementById("vol");
+    play.addEventListener("click", () => {
+        if (vangelis.paused) {
+            vangelis.play();
+            play.classList.remove("playicon");
+            play.classList.add("pauseicon");
+        } else {
+            vangelis.pause();
+            play.classList.remove("pauseicon");
+            play.classList.add("playicon");
+        }
+    });
+    vol.value = vangelis.volume;
+    vol.addEventListener("input", () => {
+        vangelis.volume = parseFloat(vol.value);
+        alert(vangelis.volume);
+        localStorage.setItem("audiovol", vangelis.volume);
+    });
+    
+    if (localStorage.getItem("audiovol") !== null) {
+        vangelis.volume = parseFloat(localStorage.getItem("audiovol"));
+        vol.value = vangelis.volume;
+    }
+    vangelis.addEventListener("volumechange", function () {
+        localStorage.setItem("audiovol", vangelis.volume);
+        vol.value = vangelis.volume;
+    });
 </script>
 
 </html>
